@@ -68,14 +68,23 @@ public class Order {
 
     //==비지니스 로직==//
     //주문 취소
-    public void cancel(){
-        if (delivery.getStatus() == DeliveryStatus.COMP){
-            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+    public String cancel(){
+        try {
+        if (delivery.getStatus() == DeliveryStatus.OnTheWay){
+            throw new IllegalStateException("이미 배송이 시작된 상품은 취소가 불가능합니다.");
         }
+        else if (delivery.getStatus() == DeliveryStatus.COMP){
+            throw new IllegalStateException("이미 배송이 완료된 상품은 취소가 불가능 합니다.");
+        }} catch (IllegalStateException e){
+            return e.getMessage();
+        }
+
         this.setStatus(OrderStatus.CANCEL);
+        this.delivery.setStatus(DeliveryStatus.CANCEL);
         for (OrderItem orderItem : this.orderItems) {
             orderItem.cancel();
         }
+        return "";
     }
 
     //==조회 로직==//
