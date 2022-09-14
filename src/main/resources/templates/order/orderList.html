@@ -10,6 +10,7 @@
 
       <div>
         <div>
+          <p th:text="${msg}">aaa</p>
           <form th:object="${orderSearch}" class="form-inline">
             <div class="form-group mb-2">
               <input type="text" th:field="*{memberName}" class="form- control" placeholder="회원명"/>
@@ -53,7 +54,7 @@
               <td th:text="${item.status}"></td>
               <td th:text="${item.orderDate}"></td>
               <td>
-                <a th:if="${item.status.name() == 'ORDER'}" href="#"
+                <a th:if="${item.status.name() == 'ORDER' and item.delivery.status.name != 'COMP'}" href="#"
                    th:href="'javascript:cancel('+${item.id}+')'"
                    class="btn btn-danger">CANCEL
                 </a>
