@@ -87,6 +87,12 @@ public class Order {
         return "";
     }
 
+    //주문 완료
+    public void completeOrder(){
+        this.setStatus(OrderStatus.COMP);
+        this.delivery.setStatus(DeliveryStatus.COMP);
+    }
+
     //==조회 로직==//
     //전체 가격 조회
     public int getTotalPrice(){
