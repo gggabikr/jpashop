@@ -10,7 +10,9 @@ import jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -52,8 +54,12 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{orderId}/cancel")
-    public String cancelOrder(@PathVariable("orderId") Long orderId){
-        orderService.cancelOrder(orderId);
-        return "redirect:/orders";
+    public String cancelOrder(@PathVariable("orderId") Long orderId, Model model){
+        String msg = orderService.cancelOrder(orderId);
+//        if(msg.length()>0){
+//            System.out.println(msg);
+            model.addAttribute("msg", msg);
+//        }
+        return "order/orderList";
     }
 }
